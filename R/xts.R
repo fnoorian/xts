@@ -64,7 +64,13 @@ function(x=NULL,
 
 
   if(!isOrdered(order.by, strictly=!unique)) {
-    indx <- order(order.by)
+    
+    if(orderBy == "timeDate") { # workaround for timeDate index
+        indx <- order(order.by@Data)
+      } else {
+        indx <- order(order.by)
+    }
+            
     if(!is.null(x)) {
       if(NCOL(x) > 1 || is.matrix(x) || is.data.frame(x)) {
         x <- x[indx,,drop=FALSE]
